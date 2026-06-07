@@ -27,7 +27,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
         body { background-color: var(--bg-dark); color: var(--text-light); font-family: var(--font-body); overflow-x: hidden; background-image: radial-gradient(circle at 50% 30%, #1a1508 0%, #070707 70%); }
 
-        /* --- GLOBAL LUXURY --- */
         .gold-text { background: var(--gold-gradient); background-size: 400% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 8s linear infinite; }
         @keyframes shine { to { background-position: 400% center; } }
 
@@ -36,32 +35,27 @@
 
         .glass-card { background: var(--bg-card); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
 
-        /* --- BACKGROUND EFFECTS --- */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .spotlight { position: fixed; top: -20%; width: 40vw; height: 150vh; background: radial-gradient(ellipse at top, rgba(255,245,210,0.1) 0%, rgba(255,245,210,0) 70%); transform-origin: top center; pointer-events: none; z-index: 2; }
         .spot-1 { left: -10%; animation: swing 12s ease-in-out infinite alternate; }
         .spot-2 { right: -10%; animation: swing 15s ease-in-out infinite alternate-reverse; }
         @keyframes swing { from { transform: rotate(-15deg); } to { transform: rotate(15deg); } }
 
-        /* --- GRAND ENTRANCE --- */
         #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1.5s; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
         .loader-text { font-family: var(--font-display); margin-top: 30px; text-align: center; opacity: 0; animation: fadeIn 2s 1s forwards; }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- HERO --- */
         .hero { height: 100vh; display: flex; justify-content: center; align-items: center; z-index: 5; position: relative; padding: 20px; }
         .hero-inner { text-align: center; padding: 50px; width: 100%; max-width: 900px; }
         .vip-badge { border: 1px dashed var(--gold-primary); padding: 25px 20px; margin: 30px 0; background: rgba(212,175,55,0.05); }
         .hero h1 { font-family: var(--font-display); font-size: 2.8rem; margin-bottom: 10px; }
 
-        /* --- COUNTDOWN TIMER --- */
         .timer-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-family: var(--font-body); }
         .timer-box { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(212, 175, 55, 0.2); padding: 10px; min-width: 70px; border-radius: 4px; }
         .timer-num { font-size: 1.5rem; font-weight: 700; color: var(--gold-light); display: block; }
         .timer-label { font-size: 0.65rem; text-transform: uppercase; tracking-spacing: 1px; color: #888; }
 
-        /* --- ATTIRE SECTION --- */
         .attire-section { padding: 100px 20px; text-align: center; z-index: 5; position: relative; }
         .attire-container { max-width: 800px; margin: 40px auto; display: none; animation: slideUp 1s forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
@@ -69,7 +63,6 @@
         .attire-card { padding: 60px 40px; border-radius: 4px; }
         .attire-icon { font-size: 50px; margin-bottom: 20px; color: var(--gold-primary); }
 
-        /* --- TIMELINE --- */
         .timeline { position: relative; max-width: 850px; margin: 60px auto; padding: 20px; }
         .timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: var(--gold-gradient); transform: translateX(-50%); }
         .t-item { margin-bottom: 45px; width: 50%; position: relative; opacity: 1; }
@@ -81,7 +74,6 @@
         .t-item ul { list-style: none; padding: 0; margin-top: 5px; }
         .t-item ul li { font-size: 0.9rem; color: #b3b3b3; position: relative; margin-bottom: 3px; }
 
-        /* --- RED CARPET --- */
         .carpet-area { padding: 100px 20px; text-align: center; position: relative; }
         .flash { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 1000; }
         
@@ -99,6 +91,9 @@
     </style>
 </head>
 <body>
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="loader">
         <img src="logo.png" alt="SPADE Logo" style="width: 250px; animation: pulse 2s infinite;">
@@ -130,7 +125,7 @@
                 </div>
             </div>
 
-            <button class="gold-button" onclick="document.getElementById('details').scrollIntoView()">Open Invitation</button>
+            <button class="gold-button" onclick="startExperience()">Open Invitation</button>
         </div>
     </section>
 
@@ -154,7 +149,6 @@
 
     <section class="attire-section">
         <h2 class="gold-text" style="font-family: var(--font-display); font-size: 2rem;">Dress Code Lookbook</h2>
-        
         <div id="advisor-attire" class="attire-container">
             <div class="attire-card glass-card">
                 <div class="attire-icon">👔</div>
@@ -162,7 +156,6 @@
                 <p style="margin-top: 20px; color: #ccc;">As an Advisor, your presence carries the legacy of SPADE. We request your attendance in formal attire.</p>
             </div>
         </div>
-
         <div id="committee-attire" class="attire-container">
             <div class="attire-card glass-card">
                 <div class="attire-icon">🧥</div>
@@ -216,6 +209,13 @@
             document.getElementById('advisor-attire').classList.add('active');
         } else {
             document.getElementById('committee-attire').classList.add('active');
+        }
+
+        // Updated function to handle audio and scroll
+        function startExperience() {
+            const music = document.getElementById('bg-music');
+            music.play().catch(e => console.log("Audio play blocked until interaction"));
+            document.getElementById('details').scrollIntoView();
         }
 
         const targetDate = new Date("June 10, 2026 19:00:00").getTime();
